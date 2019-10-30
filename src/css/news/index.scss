@@ -1,0 +1,170 @@
+@import "../common/init.scss";
+@import "../common/constants.scss";
+@import "../common/header.scss";
+@import "../common/main.scss";
+@import "../common/footer.scss";
+@import "../common/news_list.scss";
+
+
+
+//主体的左边部分
+.main {
+
+    //将所有内容包起来，不直接写在div.main中。前人经验，不知道好处是什么。
+    .wrapper {
+
+        //将新闻相关的包起来，三部分：横幅、箭头、小圆点
+        .main_content_wrapper {
+
+            //横幅的组
+            .banner_gruop {
+                width: 100%;
+                height: 202px;
+                background: darkgoldenrod;
+                //相对定位,他的子标签如果是绝对定位，就会以该标签为标准
+                position: relative;
+                overflow: hidden;
+
+                .banner_ul {
+                    overflow: hidden;
+                    //在js中初始化了，因为需要动态获取数量
+                    // width: $bannerWidth*3; //有几个轮播图就设置成几
+                    position: absolute;
+                    left: 0;
+
+                    li {
+                        float: left;
+                        width: $bannerWidth;
+                        height: $bannerHeigth;
+
+                        img {
+                            width: $bannerWidth;
+                            height: $bannerHeigth;
+                        }
+                    }
+                }
+
+                //箭头共同的属性
+                .arrow {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 70px;
+                    color: #fff;
+                    position: absolute; //向上找，找到最近的相对定位的标签，以他为标准
+                    top: 50%;
+                    margin-top: -45px;
+                    cursor: pointer;
+                    display: none; //默认无显示
+                }
+
+                //左箭头
+                .left_arrow {
+                    left: 20px;
+                }
+
+                //右箭头
+                .right_arrow {
+                    right: 20px;
+                }
+
+                //小圆点的组
+                .page_control_group {
+                    position: absolute; //绝对定位
+                    left: 0;
+                    right: 0;
+                    bottom: 20px;
+                    z-index: 0;
+
+
+                    .page_control {
+                        //在js中自动获取banner的数量
+                        // width: 10px*3+16*3px;
+                        margin: 0 auto;
+                        overflow: hidden;
+
+                        li {
+                            float: left;
+                            width: 10px;
+                            height: 10px;
+                            border: 1px solid #fff;
+                            border-radius: 50%;
+                            margin: 0 8px;
+                            //将边框放到元素内部，默认是在外部的。所以元素会多出1px的大小。
+                            box-sizing: border-box;
+                            cursor: pointer;
+
+                            //&.active 指父级元素中class为active的元素
+                            &.active {
+                                background: #fff;
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+            //轮播图下面的新闻组
+            .list_outer_group {
+                background: #fff;
+                margin-top: 12px;
+                overflow: hidden;
+
+                //新闻标签选项
+                .list_tab {
+                    overflow: hidden;
+                    width: 100%;
+                    height: 66px;
+                    border: 1px solid #eee;
+                    border-left: none;
+                    border-right: none;
+
+                    li {
+                        float: left;
+                        padding: 0 10px;
+                        margin-top: 20px;
+
+                        a {
+                            color: #878787;
+                        }
+
+                        //伪类选择器，根据特殊名字选择，假装是个类
+                        &:first-of-type {
+                            border-left: 5px solid #E63929;
+                        }
+
+                        &.active {
+                            a {
+                                color: #E63929;
+                            }
+                        }
+
+                    }
+                }
+
+                //新闻简介
+                .list_inner_group {
+                    //这是后面修改的
+                    //导入了一个函数news_list，讲新闻的详情抽离出来
+                    @include news_list;
+                }
+            }
+
+            //加载更多
+            .load_more_group {
+                padding: 20px 0;
+                text-align: center; //button是行内元素,可以让其居中
+
+                .load_more {
+                    width: 400;
+                    height: 40px;
+                    background: #f7766a; //按钮颜色
+                    color: #fff; //字体颜色
+                    border: none; //边框,不同的浏览器会由不同的默认设置,为了避免不同,都给他取消
+                    outline: none; //轮廓
+                    cursor: pointer; //鼠标放上去出现小手
+                }
+            }
+        }
+
+    }
+}
